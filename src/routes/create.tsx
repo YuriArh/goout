@@ -147,7 +147,7 @@ function PreviewCard({ form, lang }: { form: FormState; lang: 'ru' | 'en' }) {
 				<span className="text-dim">
 					{form.selectedDay} {lang === 'ru' ? 'мая' : 'May'} · {form.startTime}
 				</span>
-				<span className="ml-auto font-bold" style={{ color: 'var(--mag-mint)' }}>→</span>
+				<span className="ml-auto font-bold text-mint">→</span>
 			</div>
 		</div>
 	)
@@ -268,10 +268,7 @@ function MobileStep1({ lang, form, setForm, onNext }: { lang: 'ru' | 'en'; form:
 	return (
 		<>
 			<div className="flex-1 overflow-y-auto px-[18px] pt-4 pb-[10px] scrollbar-hide">
-				<div
-					className="h-[140px] rounded-xl overflow-hidden relative flex flex-col items-center justify-center gap-[6px] mb-[18px] text-[rgba(21,20,26,0.55)] border border-dashed border-[rgba(21,20,26,0.25)] cursor-pointer group transition-colors hover:border-violet hover:text-violet"
-					style={{ background: 'linear-gradient(135deg,#fbc2eb 0%,#a6c1ee 100%)' }}
-				>
+				<div className="h-[140px] rounded-xl overflow-hidden relative flex flex-col items-center justify-center gap-[6px] mb-[18px] text-[rgba(21,20,26,0.55)] border border-dashed border-[rgba(21,20,26,0.25)] cursor-pointer group transition-colors hover:border-violet hover:text-violet bg-[linear-gradient(135deg,#fbc2eb_0%,#a6c1ee_100%)]">
 					<div className="text-[28px] opacity-60 group-hover:opacity-80 transition-opacity">☰</div>
 					<div className="text-[12px] font-semibold opacity-75 group-hover:opacity-100">
 						{lang === 'ru' ? 'Добавить обложку' : 'Add cover'}
@@ -353,7 +350,7 @@ function MobileStep2({ lang, form, setForm, onNext, onBack }: { lang: 'ru' | 'en
 						<div className="relative h-6 mb-[6px]">
 							<div className="absolute top-[10px] inset-x-0 h-[3px] rounded-sm bg-[rgba(47,138,107,0.25)]" />
 							<div className="absolute top-[10px] left-0 w-[22%] h-[3px] rounded-sm bg-mint" />
-							<div className="absolute top-1 w-4 h-4 rounded-full bg-white border-[3px] border-mint shadow-[0_2px_6px_rgba(0,0,0,0.15)]" style={{ left: '22%', transform: 'translateX(-50%)' }} />
+							<div className="absolute top-1 left-[22%] -translate-x-1/2 w-4 h-4 rounded-full bg-white border-[3px] border-mint shadow-[0_2px_6px_rgba(0,0,0,0.15)]" />
 						</div>
 						<div className="flex justify-between text-[10px] text-mint opacity-70 mb-[10px]">
 							<span>200 м</span><span>500 м</span><span>1 км</span><span>2 км</span>
@@ -578,8 +575,7 @@ function DesktopCreateInner({ lang, form, setForm }: { lang: 'ru' | 'en'; form: 
 				<div className="flex-1 overflow-y-auto px-8 py-6 scrollbar-hide">
 					{/* Cover */}
 					<div
-						className="h-[160px] rounded-xl overflow-hidden relative flex flex-col items-center justify-center gap-[6px] mb-6 text-[rgba(21,20,26,0.55)] border border-dashed border-[rgba(21,20,26,0.25)] cursor-pointer group hover:border-violet hover:text-violet transition-colors"
-						style={{ background: 'linear-gradient(135deg,#fbc2eb 0%,#a6c1ee 100%)' }}
+						className="h-[160px] rounded-xl overflow-hidden relative flex flex-col items-center justify-center gap-[6px] mb-6 text-[rgba(21,20,26,0.55)] border border-dashed border-[rgba(21,20,26,0.25)] cursor-pointer group hover:border-violet hover:text-violet transition-colors bg-[linear-gradient(135deg,#fbc2eb_0%,#a6c1ee_100%)]"
 					>
 						<div className="text-[32px] opacity-60 group-hover:opacity-80 transition-opacity">☰</div>
 						<div className="text-[13px] font-semibold opacity-75 group-hover:opacity-100">
@@ -651,7 +647,7 @@ function DesktopCreateInner({ lang, form, setForm }: { lang: 'ru' | 'en'; form: 
 							<div className="relative h-6 mb-2">
 								<div className="absolute top-[10px] inset-x-0 h-[3px] rounded-sm bg-[rgba(47,138,107,0.25)]" />
 								<div className="absolute top-[10px] left-0 w-[22%] h-[3px] rounded-sm bg-mint" />
-								<div className="absolute top-1 w-4 h-4 rounded-full bg-white border-[3px] border-mint shadow-[0_2px_6px_rgba(0,0,0,0.15)]" style={{ left: '22%', transform: 'translateX(-50%)' }} />
+								<div className="absolute top-1 left-[22%] -translate-x-1/2 w-4 h-4 rounded-full bg-white border-[3px] border-mint shadow-[0_2px_6px_rgba(0,0,0,0.15)]" />
 							</div>
 							<div className="flex justify-between text-[10px] text-mint opacity-70 mb-3">
 								<span>200 м</span><span>500 м</span><span>1 км</span><span>2 км</span>

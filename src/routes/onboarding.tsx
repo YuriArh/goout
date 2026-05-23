@@ -81,28 +81,19 @@ function Footer({
 function Step1({ lang, onNext }: { lang: "ru" | "en"; onNext: () => void }) {
   const cards = [
     {
-      top: 22,
-      left: 18,
-      rot: -6,
+      cls: "top-[22px] left-[18px] right-[18px] -rotate-[6deg]",
       v: "public" as const,
-      title:
-        lang === "ru"
-          ? "Boiler Room · Воробьёвы горы"
-          : "Boiler Room · Vorobyovy",
+      title: lang === "ru" ? "Boiler Room · Воробьёвы горы" : "Boiler Room · Vorobyovy",
       sub: lang === "ru" ? "980 идут · 23:30" : "980 going · 23:30",
     },
     {
-      top: 100,
-      left: 48,
-      rot: 3,
+      cls: "top-[100px] left-[48px] right-[18px] rotate-[3deg]",
       v: "neighbors" as const,
       title: lang === "ru" ? "Кофе во дворе" : "Courtyard coffee",
       sub: lang === "ru" ? "14/30 · Пресня · 380 м" : "14/30 · Presnya · 380m",
     },
     {
-      top: 178,
-      left: 22,
-      rot: -3,
+      cls: "top-[178px] left-[22px] right-[18px] -rotate-[3deg]",
       v: "private" as const,
       title: lang === "ru" ? "Гараж-сейл для дома" : "Building garage sale",
       sub: lang === "ru" ? "по приглашению · 6 идут" : "invite only · 6 going",
@@ -117,13 +108,7 @@ function Step1({ lang, onNext }: { lang: "ru" | "en"; onNext: () => void }) {
           {cards.map((c, i) => (
             <div
               key={i}
-              className="absolute bg-white rounded-[10px] px-3 py-[10px] border border-rule flex items-center gap-[10px] shadow-[0_10px_24px_rgba(0,0,0,0.08)]"
-              style={{
-                top: c.top,
-                left: c.left,
-                right: 18,
-                transform: `rotate(${c.rot}deg)`,
-              }}
+              className={`absolute bg-white rounded-[10px] px-3 py-[10px] border border-rule flex items-center gap-[10px] shadow-[0_10px_24px_rgba(0,0,0,0.08)] ${c.cls}`}
             >
               <VisibilityBadge v={c.v} lang={lang} />
               <div>

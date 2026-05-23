@@ -7,9 +7,9 @@ import { useLang } from '#/lib/lang'
 export const Route = createFileRoute('/auth')({ component: AuthPage })
 
 const CARDS = [
-	{ top: 18, left: 14, rot: -5, v: 'public' as const },
-	{ top: 96, left: 44, rot: 3, v: 'neighbors' as const },
-	{ top: 172, left: 18, rot: -2, v: 'private' as const },
+	{ cls: 'top-[18px] left-[14px] right-4 -rotate-[5deg]', v: 'public' as const },
+	{ cls: 'top-[96px] left-[44px] right-4 rotate-[3deg]', v: 'neighbors' as const },
+	{ cls: 'top-[172px] left-[18px] right-4 -rotate-[2deg]', v: 'private' as const },
 ]
 
 function AuthPage() {
@@ -64,13 +64,7 @@ function AuthPage() {
 					{cards.map((c, i) => (
 						<div
 							key={i}
-							className="absolute bg-white rounded-xl px-3 py-[10px] border border-rule flex items-center gap-[10px] shadow-[0_10px_28px_rgba(0,0,0,0.09)]"
-							style={{
-								top: c.top,
-								left: c.left,
-								right: 16,
-								transform: `rotate(${c.rot}deg)`,
-							}}
+							className={`absolute bg-white rounded-xl px-3 py-[10px] border border-rule flex items-center gap-[10px] shadow-[0_10px_28px_rgba(0,0,0,0.09)] ${c.cls}`}
 						>
 							<VisibilityBadge v={c.v} lang={lang} />
 							<div>

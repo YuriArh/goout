@@ -17,7 +17,7 @@ export function MapBackground({ theme = 'paper' }: Props) {
 		<svg
 			viewBox="0 0 400 600"
 			preserveAspectRatio="xMidYMid slice"
-			style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
+			className="absolute inset-0 w-full h-full"
 		>
 			<rect width="400" height="600" fill={p.bg} />
 			{/* blocks */}

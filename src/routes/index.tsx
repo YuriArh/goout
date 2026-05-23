@@ -168,7 +168,7 @@ function DesktopHome({
 				) : (
 					<>
 						{/* Hero split */}
-						<div className="grid gap-[18px] mb-6 h-[340px]" style={{ gridTemplateColumns: '1.6fr 1fr' }}>
+						<div className="grid grid-cols-[1.6fr_1fr] gap-[18px] mb-6 h-[340px]">
 							<DesktopHeroCard event={feat!} lang={lang} />
 							<div className="flex flex-col gap-3 h-full">
 								<NeighborCard event={neighbor} lang={lang} desktop />
@@ -190,7 +190,7 @@ function DesktopHome({
 						</div>
 
 						{/* Private + list split */}
-						<div className="grid gap-[18px]" style={{ gridTemplateColumns: '1fr 1.6fr' }}>
+						<div className="grid grid-cols-[1fr_1.6fr] gap-[18px]">
 							<PrivateCard event={priv} lang={lang} desktop />
 							<div>
 								<div className="font-serif italic text-[18px] font-medium mb-1">
