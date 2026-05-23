@@ -1,0 +1,28 @@
+{
+  "projectName": "goout",
+  "mode": "file-router",
+  "typescript": true,
+  "packageManager": "npm",
+  "includeExamples": false,
+  "tailwind": true,
+  "addOnOptions": {},
+  "envVarValues": {
+    "CONVEX_DEPLOYMENT": "go_out",
+    "VITE_CONVEX_URL": "https://curious-greyhound-669.convex.cloud/"
+  },
+  "git": true,
+  "install": true,
+  "routerOnly": false,
+  "version": 1,
+  "framework": "react",
+  "chosenAddOns": [
+    "biome",
+    "nitro",
+    "convex",
+    "mcp",
+    "compiler",
+    "workos",
+    "tanstack-query",
+    "shadcn"
+  ]
+}

@@ -1,0 +1,176 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Magazine design tokens */
+  --mag-paper: #faf8f4;
+  --mag-paper2: #f3efe6;
+  --mag-ink: #15141a;
+  --mag-accent: #4d3aef;
+  --mag-coral: #ff6d5a;
+  --mag-mint: #2f8a6b;
+  --mag-rule: rgba(21, 20, 26, 0.1);
+  --mag-muted: #6a6976;
+  --mag-soft-ink: rgba(21, 20, 26, 0.55);
+
+  /* Visibility badge colors */
+  --vis-public-bg: #eae7fb;
+  --vis-public-fg: #4d3aef;
+  --vis-neighbors-bg: #e3f0ea;
+  --vis-neighbors-fg: #2f8a6b;
+  --vis-private-bg: #fde8e4;
+  --vis-private-fg: #ff6d5a;
+
+  /* shadcn/ui tokens (kept for compatibility) */
+  --background: #faf8f4;
+  --foreground: #15141a;
+  --card: #ffffff;
+  --card-foreground: #15141a;
+  --popover: #ffffff;
+  --popover-foreground: #15141a;
+  --primary: #4d3aef;
+  --primary-foreground: #ffffff;
+  --secondary: #f3efe6;
+  --secondary-foreground: #15141a;
+  --muted: #f3efe6;
+  --muted-foreground: #6a6976;
+  --accent: #f3efe6;
+  --accent-foreground: #15141a;
+  --destructive: #ff6d5a;
+  --destructive-foreground: #ffffff;
+  --border: rgba(21, 20, 26, 0.1);
+  --input: rgba(21, 20, 26, 0.1);
+  --ring: #4d3aef;
+  --radius: 0.625rem;
+}
+
+@theme inline {
+  --font-sans: 'Inter', -apple-system, system-ui, sans-serif;
+  --font-serif: 'Fraunces', 'Times New Roman', serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* Magazine palette — use as bg-ink, text-violet, border-rule, etc. */
+  --color-ink: #15141a;
+  --color-paper: #faf8f4;
+  --color-paper2: #f3efe6;
+  --color-violet: #4d3aef;
+  --color-coral: #ff6d5a;
+  --color-mint: #2f8a6b;
+  --color-dim: #6a6976;
+  --color-soft-ink: rgba(21, 20, 26, 0.55);
+  --color-rule: rgba(21, 20, 26, 0.1);
+  /* Visibility badge backgrounds */
+  --color-vis-pub: #eae7fb;
+  --color-vis-nbr: #e3f0ea;
+  --color-vis-prv: #fde8e4;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+html,
+body,
+#app {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: 'Inter', -apple-system, system-ui, sans-serif;
+  background-color: var(--mag-paper);
+  color: var(--mag-ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+  }
+}
+
+/* App-level layout */
+.app-frame {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--mag-paper);
+  color: var(--mag-ink);
+  font-family: 'Inter', -apple-system, system-ui, sans-serif;
+  overflow: hidden;
+}
+
+.font-serif {
+  font-family: 'Fraunces', 'Times New Roman', serif;
+}
+
+.font-mono {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+/* Scrollbar hide utility */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Smooth transitions */
+button,
+[role='button'] {
+  transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease,
+    transform 180ms ease, opacity 180ms ease;
+  -webkit-tap-highlight-color: transparent;
+  font-family: inherit;
+}
+
+/* Rise-in animation */
+.rise-in {
+  animation: rise-in 500ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
