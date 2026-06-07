@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SignoutRouteImport } from './routes/signout'
 import { Route as SavedRouteImport } from './routes/saved'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as MeRouteImport } from './routes/me'
@@ -18,7 +19,13 @@ import { Route as CreateRouteImport } from './routes/create'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as EventsIdRouteImport } from './routes/events.$id'
+import { Route as ApiAuthCallbackRouteImport } from './routes/api/auth/callback'
 
+const SignoutRoute = SignoutRouteImport.update({
+  id: '/signout',
+  path: '/signout',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SavedRoute = SavedRouteImport.update({
   id: '/saved',
   path: '/saved',
@@ -64,6 +71,11 @@ const EventsIdRoute = EventsIdRouteImport.update({
   path: '/events/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAuthCallbackRoute = ApiAuthCallbackRouteImport.update({
+  id: '/api/auth/callback',
+  path: '/api/auth/callback',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -74,7 +86,9 @@ export interface FileRoutesByFullPath {
   '/me': typeof MeRoute
   '/onboarding': typeof OnboardingRoute
   '/saved': typeof SavedRoute
+  '/signout': typeof SignoutRoute
   '/events/$id': typeof EventsIdRoute
+  '/api/auth/callback': typeof ApiAuthCallbackRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -85,7 +99,9 @@ export interface FileRoutesByTo {
   '/me': typeof MeRoute
   '/onboarding': typeof OnboardingRoute
   '/saved': typeof SavedRoute
+  '/signout': typeof SignoutRoute
   '/events/$id': typeof EventsIdRoute
+  '/api/auth/callback': typeof ApiAuthCallbackRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -97,7 +113,9 @@ export interface FileRoutesById {
   '/me': typeof MeRoute
   '/onboarding': typeof OnboardingRoute
   '/saved': typeof SavedRoute
+  '/signout': typeof SignoutRoute
   '/events/$id': typeof EventsIdRoute
+  '/api/auth/callback': typeof ApiAuthCallbackRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -110,7 +128,9 @@ export interface FileRouteTypes {
     | '/me'
     | '/onboarding'
     | '/saved'
+    | '/signout'
     | '/events/$id'
+    | '/api/auth/callback'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -121,7 +141,9 @@ export interface FileRouteTypes {
     | '/me'
     | '/onboarding'
     | '/saved'
+    | '/signout'
     | '/events/$id'
+    | '/api/auth/callback'
   id:
     | '__root__'
     | '/'
@@ -132,7 +154,9 @@ export interface FileRouteTypes {
     | '/me'
     | '/onboarding'
     | '/saved'
+    | '/signout'
     | '/events/$id'
+    | '/api/auth/callback'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -144,11 +168,20 @@ export interface RootRouteChildren {
   MeRoute: typeof MeRoute
   OnboardingRoute: typeof OnboardingRoute
   SavedRoute: typeof SavedRoute
+  SignoutRoute: typeof SignoutRoute
   EventsIdRoute: typeof EventsIdRoute
+  ApiAuthCallbackRoute: typeof ApiAuthCallbackRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/signout': {
+      id: '/signout'
+      path: '/signout'
+      fullPath: '/signout'
+      preLoaderRoute: typeof SignoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/saved': {
       id: '/saved'
       path: '/saved'
@@ -212,6 +245,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EventsIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/auth/callback': {
+      id: '/api/auth/callback'
+      path: '/api/auth/callback'
+      fullPath: '/api/auth/callback'
+      preLoaderRoute: typeof ApiAuthCallbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -224,7 +264,9 @@ const rootRouteChildren: RootRouteChildren = {
   MeRoute: MeRoute,
   OnboardingRoute: OnboardingRoute,
   SavedRoute: SavedRoute,
+  SignoutRoute: SignoutRoute,
   EventsIdRoute: EventsIdRoute,
+  ApiAuthCallbackRoute: ApiAuthCallbackRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

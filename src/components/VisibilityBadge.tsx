@@ -12,12 +12,6 @@ const CONFIG: Record<
     icon: "◎",
     cls: "bg-vis-pub text-violet",
   },
-  neighbors: {
-    ru: "для соседей",
-    en: "neighbors",
-    icon: "◉",
-    cls: "bg-vis-nbr text-mint",
-  },
   private: {
     ru: "закрытое",
     en: "private",

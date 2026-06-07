@@ -2,12 +2,12 @@ import {
 	HeadContent,
 	Scripts,
 	createRootRouteWithContext,
-} from '@tanstack/react-router'
-import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
-import { TanStackDevtools } from '@tanstack/react-devtools'
+} from "@tanstack/react-router";
+import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import { TanStackDevtools } from "@tanstack/react-devtools";
+import { AuthKitProvider } from "@workos/authkit-tanstack-react-start/client";
 
-import ConvexProvider from '../integrations/convex/provider'
-import WorkOSProvider from '../integrations/workos/provider'
+import ConvexProvider from "../integrations/convex/provider";
 import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 import { LangProvider } from '../lib/lang'
 
@@ -42,18 +42,18 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 			</head>
 			<body>
 				<ConvexProvider>
-					<WorkOSProvider>
+					<AuthKitProvider>
 						<LangProvider>
 							{children}
 						</LangProvider>
 						<TanStackDevtools
-							config={{ position: 'bottom-right' }}
+							config={{ position: "bottom-right" }}
 							plugins={[
-								{ name: 'Tanstack Router', render: <TanStackRouterDevtoolsPanel /> },
+								{ name: "Tanstack Router", render: <TanStackRouterDevtoolsPanel /> },
 								TanStackQueryDevtools,
 							]}
 						/>
-					</WorkOSProvider>
+					</AuthKitProvider>
 				</ConvexProvider>
 				<Scripts />
 			</body>

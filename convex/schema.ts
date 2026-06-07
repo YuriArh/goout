@@ -34,10 +34,8 @@ export default defineSchema({
     ),
     visibility: v.union(
       v.literal("public"),
-      v.literal("neighbors"),
       v.literal("private"),
     ),
-    visibilityRadiusM: v.optional(v.number()), // meters, only for 'neighbors'
 
     // Pricing
     priceFrom: v.number(),

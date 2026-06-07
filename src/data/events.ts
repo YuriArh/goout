@@ -1,4 +1,4 @@
-export type Visibility = 'public' | 'neighbors' | 'private'
+export type Visibility = 'public' | 'private'
 
 export type EventAuthor = {
 	name: string
@@ -180,8 +180,8 @@ export const EVENTS: EventData[] = [
 		attendees: 14,
 		capacity: 30,
 		format: 'offline',
-		tag: { ru: 'для соседей', en: 'for neighbors' },
-		visibility: 'neighbors',
+		tag: null,
+		visibility: 'public',
 		author: { name: 'Аня С.', handle: '@anya_s', verified: false, avatar: '#a6c1ee' },
 		img: 'linear-gradient(135deg,#fddb92 0%,#d1fdff 100%)',
 		blurb: {

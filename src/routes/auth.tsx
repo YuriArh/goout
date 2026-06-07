@@ -1,10 +1,24 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useAuth } from "@workos-inc/authkit-react";
-import { useEffect } from "react";
+import { createFileRoute, redirect } from "@tanstack/react-router";
+import {
+	getAuth,
+	getSignInUrl,
+	getSignUpUrl,
+} from "@workos/authkit-tanstack-react-start";
 import { VisibilityBadge } from "#/components/VisibilityBadge";
 import { useLang } from "#/lib/lang";
 
-export const Route = createFileRoute("/auth")({ component: AuthPage });
+export const Route = createFileRoute("/auth")({
+	loader: async () => {
+		const { user } = await getAuth();
+		if (user) {
+			throw redirect({ href: "/" });
+		}
+		const signInUrl = await getSignInUrl();
+		const signUpUrl = await getSignUpUrl();
+		return { signInUrl, signUpUrl };
+	},
+	component: AuthPage,
+});
 
 const CARDS = [
 	{
@@ -19,13 +33,8 @@ const CARDS = [
 ];
 
 function AuthPage() {
-	const { user, isLoading, signIn } = useAuth();
+	const { signInUrl, signUpUrl } = Route.useLoaderData();
 	const { lang, toggle, t } = useLang();
-	const navigate = useNavigate();
-
-	useEffect(() => {
-		if (!isLoading && user) navigate({ to: "/" });
-	}, [isLoading, user, navigate]);
 
 	const cards = [
 		{
@@ -113,26 +122,20 @@ function AuthPage() {
 
 			{/* Footer CTAs */}
 			<div className="px-5 pt-[14px] pb-7 border-t border-rule flex flex-col gap-[10px] shrink-0">
-				<button
-					type="button"
-					disabled={isLoading}
-					onClick={() => signIn({ state: { returnTo: "/" } })}
-					className="w-full px-5 py-[15px] rounded-[14px] bg-ink text-white font-bold text-[15px] tracking-[0.01em] border-none cursor-pointer flex items-center justify-between disabled:opacity-60 font-sans"
+				<a
+					href={signInUrl}
+					className="w-full px-5 py-[15px] rounded-[14px] bg-ink text-white font-bold text-[15px] tracking-[0.01em] border-none cursor-pointer flex items-center justify-between font-sans no-underline"
 				>
 					<span>{t("auth.signin")}</span>
 					<span className="text-[18px]">→</span>
-				</button>
+				</a>
 
-				<button
-					type="button"
-					disabled={isLoading}
-					onClick={() =>
-						signIn({ state: { returnTo: "/onboarding", isNew: true } })
-					}
-					className="w-full px-5 py-[15px] rounded-[14px] bg-transparent text-ink font-semibold text-[15px] border-[1.5px] border-[rgba(21,20,26,0.15)] cursor-pointer disabled:opacity-60 font-sans"
+				<a
+					href={signUpUrl}
+					className="w-full px-5 py-[15px] rounded-[14px] bg-transparent text-ink font-semibold text-[15px] border-[1.5px] border-[rgba(21,20,26,0.15)] cursor-pointer font-sans text-center no-underline"
 				>
 					{t("auth.signup")}
-				</button>
+				</a>
 
 				<p className="text-center text-[11px] text-dim leading-[1.5] mt-1">
 					{t("auth.terms")}
