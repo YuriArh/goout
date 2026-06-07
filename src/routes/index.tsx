@@ -1,49 +1,61 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { useState } from 'react'
-import { AppShell } from '#/components/AppShell'
-import { MagChip } from '#/components/MagChip'
+import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import { AppShell } from "#/components/AppShell";
 import {
-	HeroCard,
 	DesktopHeroCard,
-	SecondaryCard,
 	GridCard,
-	ListTableRow,
-	WideCard,
+	HeroCard,
 	ListCard,
-	PrivateCard,
+	ListTableRow,
 	NeighborCard,
-} from '#/components/EventCard'
-import { useLang } from '#/lib/lang'
-import { useMediaQuery } from '#/hooks/useMediaQuery'
-import { CATEGORIES, EVENTS, byId } from '#/data/events'
+	PrivateCard,
+	SecondaryCard,
+	WideCard,
+} from "#/components/EventCard";
+import { MagChip } from "#/components/MagChip";
+import { byId, CATEGORIES, EVENTS } from "#/data/events";
+import { useMediaQuery } from "#/hooks/useMediaQuery";
+import { useLang } from "#/lib/lang";
 
-export const Route = createFileRoute('/')({ component: Home })
+export const Route = createFileRoute("/")({ component: Home });
 
 function Home() {
-	const { lang } = useLang()
-	const [activeCat, setActiveCat] = useState('all')
-	const isDesktop = useMediaQuery('(min-width: 900px)')
+	const { lang, t } = useLang();
+	const [activeCat, setActiveCat] = useState("all");
+	const isDesktop = useMediaQuery("(min-width: 900px)");
 
-	const feat = byId('e1')!
-	const featMobile = byId('e8')!
-	const secondary = byId('e8')!
-	const neighbor = EVENTS.find((e) => e.id === 'e_neighbor1')!
-	const priv = EVENTS.find((e) => e.id === 'e_neighbor2')!
-	const wide = byId('e3')!
-	const gridEvents = [byId('e2')!, byId('e3')!, byId('e4')!, byId('e6')!, byId('e10')!, byId('e12')!]
-	const listItems = [byId('e5')!, byId('e7')!, byId('e9')!, byId('e11')!]
-	const listMobile = [byId('e5')!, byId('e7')!, byId('e10')!]
+	const feat = byId("e1")!;
+	const featMobile = byId("e8")!;
+	const secondary = byId("e8")!;
+	const neighbor = EVENTS.find((e) => e.id === "e_neighbor1")!;
+	const priv = EVENTS.find((e) => e.id === "e_neighbor2")!;
+	const wide = byId("e3")!;
+	const gridEvents = [
+		byId("e2")!,
+		byId("e3")!,
+		byId("e4")!,
+		byId("e6")!,
+		byId("e10")!,
+		byId("e12")!,
+	];
+	const listItems = [byId("e5")!, byId("e7")!, byId("e9")!, byId("e11")!];
+	const listMobile = [byId("e5")!, byId("e7")!, byId("e10")!];
 
 	const filtered =
-		activeCat === 'all'
-			? EVENTS.filter((e) => !['e_neighbor1', 'e_neighbor2'].includes(e.id))
-			: EVENTS.filter((e) => e.cat === activeCat && !['e_neighbor1', 'e_neighbor2'].includes(e.id))
+		activeCat === "all"
+			? EVENTS.filter((e) => !["e_neighbor1", "e_neighbor2"].includes(e.id))
+			: EVENTS.filter(
+					(e) =>
+						e.cat === activeCat &&
+						!["e_neighbor1", "e_neighbor2"].includes(e.id),
+				);
 
 	return (
 		<AppShell>
 			{isDesktop ? (
 				<DesktopHome
 					lang={lang}
+					t={t}
 					activeCat={activeCat}
 					onCatChange={setActiveCat}
 					feat={feat}
@@ -57,6 +69,7 @@ function Home() {
 			) : (
 				<MobileHome
 					lang={lang}
+					t={t}
 					activeCat={activeCat}
 					onCatChange={setActiveCat}
 					featMobile={featMobile}
@@ -68,40 +81,42 @@ function Home() {
 				/>
 			)}
 		</AppShell>
-	)
+	);
 }
 
 // ─── Section divider ──────────────────────────────────────────
 
-function SectionHead({ label, count, lang }: { label: string; count?: string; lang: 'ru' | 'en' }) {
+function SectionHead({ label, count }: { label: string; count?: string }) {
 	return (
 		<div className="flex items-baseline gap-3 my-2 mb-[14px]">
 			<div className="font-serif italic text-[22px] font-medium">{label}</div>
 			<div className="flex-1 h-px bg-rule" />
-			{count && (
-				<div className="text-xs text-dim">{count}</div>
-			)}
+			{count && <div className="text-xs text-dim">{count}</div>}
 		</div>
-	)
+	);
 }
 
 // ─── Desktop layout ──────────────────────────────────────────
 
+type TFn = ReturnType<typeof useLang>["t"];
+
 type DesktopHomeProps = {
-	lang: 'ru' | 'en'
-	activeCat: string
-	onCatChange: (id: string) => void
-	feat: ReturnType<typeof byId>
-	secondary: ReturnType<typeof byId>
-	neighbor: NonNullable<ReturnType<typeof byId>>
-	priv: NonNullable<ReturnType<typeof byId>>
-	gridEvents: NonNullable<ReturnType<typeof byId>>[]
-	listItems: NonNullable<ReturnType<typeof byId>>[]
-	filtered: typeof EVENTS
-}
+	lang: "ru" | "en";
+	t: TFn;
+	activeCat: string;
+	onCatChange: (id: string) => void;
+	feat: ReturnType<typeof byId>;
+	secondary: ReturnType<typeof byId>;
+	neighbor: NonNullable<ReturnType<typeof byId>>;
+	priv: NonNullable<ReturnType<typeof byId>>;
+	gridEvents: NonNullable<ReturnType<typeof byId>>[];
+	listItems: NonNullable<ReturnType<typeof byId>>[];
+	filtered: typeof EVENTS;
+};
 
 function DesktopHome({
 	lang,
+	t,
 	activeCat,
 	onCatChange,
 	feat,
@@ -118,17 +133,13 @@ function DesktopHome({
 			<div className="px-8 pt-[18px] pb-[14px] border-b border-rule flex items-center justify-between bg-paper shrink-0">
 				<div>
 					<div className="font-serif text-[28px] font-medium tracking-[-0.02em] leading-[1.05]">
-						{lang === 'ru' ? 'Эта неделя в Москве' : 'This week in Moscow'}
+						{t("home.title")}
 					</div>
-					<div className="text-xs text-dim mt-1">
-						{lang === 'ru'
-							? '№19 · 124 события · 47 от соседей · обновлено 2 мин. назад'
-							: '№19 · 124 events · 47 from neighbors · updated 2 min ago'}
-					</div>
+					<div className="text-xs text-dim mt-1">{t("home.subtitle")}</div>
 				</div>
 				<div className="min-w-[260px] bg-white rounded-[10px] px-[14px] py-[9px] text-[13px] text-dim border border-rule flex items-center gap-2">
 					<span>⌕</span>
-					{lang === 'ru' ? 'Поиск события, района, тега' : 'Search event, area, tag'}
+					{t("home.search.ph")}
 				</div>
 			</div>
 
@@ -147,15 +158,15 @@ function DesktopHome({
 					))}
 					<div className="px-[14px] py-[6px] rounded-full text-xs font-medium text-dim flex items-center gap-1 ml-1">
 						<span>⚙</span>
-						{lang === 'ru' ? 'Фильтры · 3' : 'Filters · 3'}
+						{t("home.filters")}
 					</div>
 				</div>
 
-				{activeCat !== 'all' ? (
+				{activeCat !== "all" ? (
 					<>
 						{filtered.length === 0 ? (
 							<div className="text-center py-20 text-dim font-serif italic text-[20px]">
-								{lang === 'ru' ? 'Пока пусто' : 'Nothing here yet'}
+								{t("home.empty")}
 							</div>
 						) : (
 							<div className="grid grid-cols-3 gap-4">
@@ -178,9 +189,8 @@ function DesktopHome({
 
 						{/* Editor's picks */}
 						<SectionHead
-							label={lang === 'ru' ? 'Рекомендации редакции' : "Editor's picks"}
-							count={lang === 'ru' ? 'показано 6 из 46 ›' : 'showing 6 of 46 ›'}
-							lang={lang}
+							label={t("home.picks")}
+							count={t("home.picks.count")}
 						/>
 
 						<div className="grid grid-cols-3 gap-4 mb-7">
@@ -194,7 +204,7 @@ function DesktopHome({
 							<PrivateCard event={priv} lang={lang} desktop />
 							<div>
 								<div className="font-serif italic text-[18px] font-medium mb-1">
-									{lang === 'ru' ? 'Быстро' : 'At a glance'}
+									{t("home.quick")}
 								</div>
 								{listItems.map((e) => (
 									<ListTableRow key={e.id} event={e} lang={lang} />
@@ -205,25 +215,27 @@ function DesktopHome({
 				)}
 			</div>
 		</div>
-	)
+	);
 }
 
 // ─── Mobile layout ───────────────────────────────────────────
 
 type MobileHomeProps = {
-	lang: 'ru' | 'en'
-	activeCat: string
-	onCatChange: (id: string) => void
-	featMobile: NonNullable<ReturnType<typeof byId>>
-	neighbor: NonNullable<ReturnType<typeof byId>>
-	priv: NonNullable<ReturnType<typeof byId>>
-	wide: NonNullable<ReturnType<typeof byId>>
-	listMobile: NonNullable<ReturnType<typeof byId>>[]
-	filtered: typeof EVENTS
-}
+	lang: "ru" | "en";
+	t: TFn;
+	activeCat: string;
+	onCatChange: (id: string) => void;
+	featMobile: NonNullable<ReturnType<typeof byId>>;
+	neighbor: NonNullable<ReturnType<typeof byId>>;
+	priv: NonNullable<ReturnType<typeof byId>>;
+	wide: NonNullable<ReturnType<typeof byId>>;
+	listMobile: NonNullable<ReturnType<typeof byId>>[];
+	filtered: typeof EVENTS;
+};
 
 function MobileHome({
 	lang,
+	t,
 	activeCat,
 	onCatChange,
 	featMobile,
@@ -251,20 +263,18 @@ function MobileHome({
 			{/* Section header */}
 			<div className="mb-3">
 				<div className="font-serif italic text-[30px] font-medium tracking-[-0.02em] leading-none">
-					{lang === 'ru' ? 'Эта неделя' : 'This week'}
+					{t("home.mobile.title")}
 				</div>
 				<div className="text-[11px] text-dim mt-[3px]">
-					{lang === 'ru'
-						? '№19 · 124 события · 47 от соседей'
-						: '№19 · 124 events · 47 from neighbors'}
+					{t("home.mobile.sub")}
 				</div>
 			</div>
 
-			{activeCat !== 'all' ? (
+			{activeCat !== "all" ? (
 				<>
 					{filtered.length === 0 ? (
 						<div className="text-center py-[60px] text-dim font-serif italic text-[18px]">
-							{lang === 'ru' ? 'Пока пусто' : 'Nothing here yet'}
+							{t("home.empty")}
 						</div>
 					) : (
 						filtered.map((e) => <WideCard key={e.id} event={e} lang={lang} />)
@@ -280,7 +290,7 @@ function MobileHome({
 					{/* List section */}
 					<div className="flex items-center gap-[10px] mt-[14px] mb-1">
 						<div className="font-serif italic text-[18px] font-medium">
-							{lang === 'ru' ? 'Ещё идеи' : 'More to do'}
+							{t("home.more")}
 						</div>
 						<div className="flex-1 h-px bg-rule" />
 					</div>
@@ -291,12 +301,12 @@ function MobileHome({
 					{/* All events section */}
 					<div className="flex items-center gap-[10px] mt-[18px] mb-[10px]">
 						<div className="font-serif italic text-[18px] font-medium">
-							{lang === 'ru' ? 'Все события' : 'All events'}
+							{t("home.all")}
 						</div>
 						<div className="flex-1 h-px bg-rule" />
 						<div className="text-[11px] text-dim">все →</div>
 					</div>
-					{EVENTS.filter((e) => !['e_neighbor1', 'e_neighbor2'].includes(e.id))
+					{EVENTS.filter((e) => !["e_neighbor1", "e_neighbor2"].includes(e.id))
 						.slice(0, 6)
 						.map((e) => (
 							<WideCard key={e.id} event={e} lang={lang} />
@@ -306,5 +316,5 @@ function MobileHome({
 
 			<div className="h-6" />
 		</div>
-	)
+	);
 }

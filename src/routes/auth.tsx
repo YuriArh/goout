@@ -1,43 +1,52 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
-import { useAuth } from '@workos-inc/authkit-react'
-import { useEffect } from 'react'
-import { VisibilityBadge } from '#/components/VisibilityBadge'
-import { useLang } from '#/lib/lang'
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useAuth } from "@workos-inc/authkit-react";
+import { useEffect } from "react";
+import { VisibilityBadge } from "#/components/VisibilityBadge";
+import { useLang } from "#/lib/lang";
 
-export const Route = createFileRoute('/auth')({ component: AuthPage })
+export const Route = createFileRoute("/auth")({ component: AuthPage });
 
 const CARDS = [
-	{ cls: 'top-[18px] left-[14px] right-4 -rotate-[5deg]', v: 'public' as const },
-	{ cls: 'top-[96px] left-[44px] right-4 rotate-[3deg]', v: 'neighbors' as const },
-	{ cls: 'top-[172px] left-[18px] right-4 -rotate-[2deg]', v: 'private' as const },
-]
+	{
+		cls: "top-[18px] left-[14px] right-4 -rotate-[5deg]",
+		v: "public" as const,
+	},
+	{ cls: "top-[96px] left-[44px] right-4 rotate-[3deg]", v: "public" as const },
+	{
+		cls: "top-[172px] left-[18px] right-4 -rotate-[2deg]",
+		v: "private" as const,
+	},
+];
 
 function AuthPage() {
-	const { user, isLoading, signIn } = useAuth()
-	const { lang, toggle } = useLang()
-	const navigate = useNavigate()
+	const { user, isLoading, signIn } = useAuth();
+	const { lang, toggle, t } = useLang();
+	const navigate = useNavigate();
 
 	useEffect(() => {
-		if (!isLoading && user) navigate({ to: '/' })
-	}, [isLoading, user, navigate])
+		if (!isLoading && user) navigate({ to: "/" });
+	}, [isLoading, user, navigate]);
 
 	const cards = [
 		{
 			...CARDS[0],
-			title: lang === 'ru' ? 'Boiler Room · Воробьёвы горы' : 'Boiler Room · Vorobyovy',
-			sub: lang === 'ru' ? '980 идут · 23:30' : '980 going · 23:30',
+			title:
+				lang === "ru"
+					? "Boiler Room · Воробьёвы горы"
+					: "Boiler Room · Vorobyovy",
+			sub: lang === "ru" ? "980 идут · 23:30" : "980 going · 23:30",
 		},
 		{
 			...CARDS[1],
-			title: lang === 'ru' ? 'Кофе во дворе' : 'Courtyard coffee',
-			sub: lang === 'ru' ? '14/30 · Пресня · 380 м' : '14/30 · Presnya · 380m',
+			title: lang === "ru" ? "Кофе во дворе" : "Courtyard coffee",
+			sub: lang === "ru" ? "14/30 · Пресня · 380 м" : "14/30 · Presnya · 380m",
 		},
 		{
 			...CARDS[2],
-			title: lang === 'ru' ? 'Гараж-сейл для дома' : 'Building garage sale',
-			sub: lang === 'ru' ? 'по приглашению · 6 идут' : 'invite only · 6 going',
+			title: lang === "ru" ? "Гараж-сейл для дома" : "Building garage sale",
+			sub: lang === "ru" ? "по приглашению · 6 идут" : "invite only · 6 going",
 		},
-	]
+	];
 
 	return (
 		<div className="min-h-dvh bg-paper flex flex-col max-w-[420px] mx-auto">
@@ -68,7 +77,9 @@ function AuthPage() {
 						>
 							<VisibilityBadge v={c.v} lang={lang} />
 							<div>
-								<div className="text-xs font-semibold leading-[1.25]">{c.title}</div>
+								<div className="text-xs font-semibold leading-[1.25]">
+									{c.title}
+								</div>
 								<div className="text-[10px] text-dim mt-px">{c.sub}</div>
 							</div>
 						</div>
@@ -77,27 +88,26 @@ function AuthPage() {
 
 				{/* Headline */}
 				<h1 className="font-serif text-[34px] font-medium tracking-[-0.03em] leading-[1.02] mb-3">
-					{lang === 'ru' ? (
+					{lang === "ru" ? (
 						<>
 							Концерт в клубе
-							<br />и{' '}
-							<em className="text-violet italic">кофе на лавочке</em> —<br />
+							<br />и <em className="text-violet italic">кофе на лавочке</em> —
+							<br />
 							оба здесь.
 						</>
 					) : (
 						<>
 							Club nights
-							<br />and{' '}
-							<em className="text-violet italic">coffee on a bench</em> —<br />
+							<br />
+							and <em className="text-violet italic">coffee on a bench</em> —
+							<br />
 							both live here.
 						</>
 					)}
 				</h1>
 
 				<p className="text-sm text-dim leading-[1.55] max-w-[320px] mb-8">
-					{lang === 'ru'
-						? 'goout — площадка, где афишу собирают сами горожане. Публикуйте открыто, для соседей, или по приглашению.'
-						: 'goout is where the guide is built by people who live here. Post openly, for neighbors, or invite only.'}
+					{t("auth.description")}
 				</p>
 			</div>
 
@@ -106,28 +116,28 @@ function AuthPage() {
 				<button
 					type="button"
 					disabled={isLoading}
-					onClick={() => signIn({ state: { returnTo: '/' } })}
+					onClick={() => signIn({ state: { returnTo: "/" } })}
 					className="w-full px-5 py-[15px] rounded-[14px] bg-ink text-white font-bold text-[15px] tracking-[0.01em] border-none cursor-pointer flex items-center justify-between disabled:opacity-60 font-sans"
 				>
-					<span>{lang === 'ru' ? 'Войти' : 'Sign in'}</span>
+					<span>{t("auth.signin")}</span>
 					<span className="text-[18px]">→</span>
 				</button>
 
 				<button
 					type="button"
 					disabled={isLoading}
-					onClick={() => signIn({ state: { returnTo: '/onboarding', isNew: true } })}
+					onClick={() =>
+						signIn({ state: { returnTo: "/onboarding", isNew: true } })
+					}
 					className="w-full px-5 py-[15px] rounded-[14px] bg-transparent text-ink font-semibold text-[15px] border-[1.5px] border-[rgba(21,20,26,0.15)] cursor-pointer disabled:opacity-60 font-sans"
 				>
-					{lang === 'ru' ? 'Зарегистрироваться' : 'Create account'}
+					{t("auth.signup")}
 				</button>
 
 				<p className="text-center text-[11px] text-dim leading-[1.5] mt-1">
-					{lang === 'ru'
-						? 'Создавая аккаунт, вы соглашаетесь с условиями использования'
-						: 'By creating an account you agree to the terms of use'}
+					{t("auth.terms")}
 				</p>
 			</div>
 		</div>
-	)
+	);
 }

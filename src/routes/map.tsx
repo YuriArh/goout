@@ -1,32 +1,31 @@
-import { createFileRoute, Link } from '@tanstack/react-router'
-import { useState } from 'react'
-import { AppShell } from '#/components/AppShell'
-import { MapBackground } from '#/components/MapBackground'
-import { VisibilityBadge } from '#/components/VisibilityBadge'
-import { Avatar } from '#/components/Avatar'
-import { useLang } from '#/lib/lang'
-import { cn } from '#/lib/utils'
-import { EVENTS, MAP_POSITIONS, byId, formatDate } from '#/data/events'
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
+import { AppShell } from "#/components/AppShell";
+import { Avatar } from "#/components/Avatar";
+import { MapBackground } from "#/components/MapBackground";
+import { VisibilityBadge } from "#/components/VisibilityBadge";
+import { byId, EVENTS, formatDate, MAP_POSITIONS } from "#/data/events";
+import { useLang } from "#/lib/lang";
+import type { TranslationKey } from "#/lib/translations";
+import { cn } from "#/lib/utils";
 
-export const Route = createFileRoute('/map')({ component: MapPage })
+export const Route = createFileRoute("/map")({ component: MapPage });
 
 const VIS_COLORS: Record<string, string> = {
-	public: '#4d3aef',
-	neighbors: '#2f8a6b',
-	private: '#ff6d5a',
-}
+	public: "#4d3aef",
+	private: "#ff6d5a",
+};
 
-const LEGEND = [
-	{ color: '#4d3aef', ru: 'Открытое', en: 'Public' },
-	{ color: '#2f8a6b', ru: 'Соседи', en: 'Neighbors' },
-	{ color: '#ff6d5a', ru: 'Закрытое', en: 'Private' },
-]
+const LEGEND: { color: string; key: TranslationKey }[] = [
+	{ color: "#4d3aef", key: "legend.public" },
+	{ color: "#ff6d5a", key: "legend.private" },
+];
 
 function MapPage() {
-	const { lang } = useLang()
-	const [selected, setSelected] = useState<string | null>(null)
+	const { lang, t } = useLang();
+	const [selected, setSelected] = useState<string | null>(null);
 
-	const selectedEvent = selected ? byId(selected) : null
+	const selectedEvent = selected ? byId(selected) : null;
 
 	return (
 		<AppShell>
@@ -38,10 +37,10 @@ function MapPage() {
 
 				{/* Pins */}
 				{EVENTS.map((e) => {
-					const pos = MAP_POSITIONS[e.id]
-					if (!pos) return null
-					const isSelected = selected === e.id
-					const color = VIS_COLORS[e.visibility] ?? '#15141a'
+					const pos = MAP_POSITIONS[e.id];
+					if (!pos) return null;
+					const isSelected = selected === e.id;
+					const color = VIS_COLORS[e.visibility] ?? "#15141a";
 
 					return (
 						<button
@@ -49,8 +48,8 @@ function MapPage() {
 							type="button"
 							onClick={() => setSelected(isSelected ? null : e.id)}
 							className={cn(
-								'absolute -translate-x-1/2 -translate-y-1/2 bg-transparent border-none cursor-pointer p-0',
-								isSelected ? 'z-20' : 'z-10',
+								"absolute -translate-x-1/2 -translate-y-1/2 bg-transparent border-none cursor-pointer p-0",
+								isSelected ? "z-20" : "z-10",
 							)}
 							style={{ left: `${pos.x}%`, top: `${pos.y}%` }}
 						>
@@ -63,15 +62,12 @@ function MapPage() {
 								</div>
 							) : (
 								<div
-									className={cn(
-										'rounded-full border-[2.5px] border-white shadow-[0_2px_6px_rgba(0,0,0,0.2)]',
-										e.visibility === 'neighbors' ? 'w-[14px] h-[14px]' : 'w-3 h-3',
-									)}
+									className="rounded-full border-[2.5px] border-white shadow-[0_2px_6px_rgba(0,0,0,0.2)] w-3 h-3"
 									style={{ background: color }}
 								/>
 							)}
 						</button>
-					)
+					);
 				})}
 
 				{/* Selected event card */}
@@ -92,7 +88,8 @@ function MapPage() {
 								<div className="flex gap-[6px] items-center text-[11px]">
 									<Avatar author={selectedEvent.author} size={16} />
 									<span className="text-dim">
-										{selectedEvent.venue[lang]} · {formatDate(selectedEvent.date, lang)}
+										{selectedEvent.venue[lang]} ·{" "}
+										{formatDate(selectedEvent.date, lang)}
 									</span>
 								</div>
 							</div>
@@ -102,7 +99,7 @@ function MapPage() {
 							params={{ id: selectedEvent.id }}
 							className="block mt-3 px-4 py-[11px] rounded-[10px] bg-ink text-paper text-center text-[13px] font-semibold no-underline tracking-[0.02em]"
 						>
-							{lang === 'ru' ? 'Подробнее →' : 'View event →'}
+							{t("map.view")}
 						</Link>
 					</div>
 				)}
@@ -110,18 +107,24 @@ function MapPage() {
 				{/* Legend */}
 				<div className="absolute top-[14px] right-[14px] bg-[rgba(250,248,244,0.92)] rounded-[10px] px-3 py-2 flex flex-col gap-[5px] backdrop-blur-sm border border-[rgba(21,20,26,0.08)] z-10">
 					{LEGEND.map((item) => (
-						<div key={item.ru} className="flex items-center gap-[6px] text-[10px]">
-							<div className="w-2 h-2 rounded-full shrink-0" style={{ background: item.color }} />
-							<span className="text-ink font-medium">{lang === 'ru' ? item.ru : item.en}</span>
+						<div
+							key={item.key}
+							className="flex items-center gap-[6px] text-[10px]"
+						>
+							<div
+								className="w-2 h-2 rounded-full shrink-0"
+								style={{ background: item.color }}
+							/>
+							<span className="text-ink font-medium">{t(item.key)}</span>
 						</div>
 					))}
 				</div>
 
 				{/* Count badge */}
 				<div className="absolute top-[14px] left-[14px] bg-ink text-paper px-3 py-[6px] rounded-full text-[11px] font-semibold z-10">
-					{EVENTS.length} {lang === 'ru' ? 'событий' : 'events'}
+					{EVENTS.length} {t("map.events.count")}
 				</div>
 			</div>
 		</AppShell>
-	)
+	);
 }
