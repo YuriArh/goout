@@ -19,6 +19,15 @@ interface MyRouterContext {
 	queryClient: QueryClient
 }
 
+function NotFound() {
+	return (
+		<div style={{ padding: '2rem', textAlign: 'center' }}>
+			<h1>404</h1>
+			<p>Страница не найдена</p>
+		</div>
+	)
+}
+
 export const Route = createRootRouteWithContext<MyRouterContext>()({
 	head: () => ({
 		meta: [
@@ -31,6 +40,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 			{ rel: 'stylesheet', href: appCss },
 		],
 	}),
+	notFoundComponent: NotFound,
 	shellComponent: RootDocument,
 })
 
@@ -41,8 +51,8 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 				<HeadContent />
 			</head>
 			<body>
-				<ConvexProvider>
-					<AuthKitProvider>
+				<AuthKitProvider>
+					<ConvexProvider>
 						<LangProvider>
 							{children}
 						</LangProvider>
@@ -53,8 +63,8 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 								TanStackQueryDevtools,
 							]}
 						/>
-					</AuthKitProvider>
-				</ConvexProvider>
+					</ConvexProvider>
+				</AuthKitProvider>
 				<Scripts />
 			</body>
 		</html>

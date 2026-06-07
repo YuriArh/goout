@@ -4,6 +4,12 @@ import { v } from "convex/values";
 const bilingualStr = v.object({ ru: v.string(), en: v.string() });
 
 export default defineSchema({
+  users: defineTable({
+    workosId: v.string(),
+    email: v.optional(v.string()),
+    name: v.optional(v.string()),
+  }).index("by_workos_id", ["workosId"]),
+
   events: defineTable({
     // Content
     title: bilingualStr,
